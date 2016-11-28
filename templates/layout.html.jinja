@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{url_for('static', filename='foundation.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <title>AMHI Mental Health Advocacy Week - Overlay Generator</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
         <h3>Overlay Generator</h3>
         <span>Presented by AMHI, UC, etc</span>
     </div>
-    <div id='content'>
+    <div id='content' align='center'>
         {% block body %}{% endblock %}
     </div>
 </body>

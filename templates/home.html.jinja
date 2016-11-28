@@ -3,20 +3,28 @@
 <div align='center' class='row desc'>
     Show your support for the mental health advocacy week with a new profile picture! Upload your own here or connect with Facebook to add the overlay to your current profile picture.
 </div>
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-                <li>{{ category }}: {{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
 <div>
     <span>Note: image must be of PNG, JPG/JPEG or GIF format with dimension 1000x1000 or greater.</span>
     <form action='/' method='post' enctype="multipart/form-data">
-        <input type='file' name='file'>
-        <input type='submit' value='Upload'>
+        <fieldset>
+            <div align='center' class="row">
+                <div class="large-9 columns">
+                    <input class='button' type='file' name='file'>
+                </div>
+                <div class="large-3 columns">
+                    <input class='button' type='submit' value='Upload'>
+                </div>
+            </div>
+        </fieldset>
     </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class='row errors'>
+                {% for category, message in messages %}
+                    <p>{{ category }}: {{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 </div>
 {% endblock %}
