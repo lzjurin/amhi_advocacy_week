@@ -1,5 +1,5 @@
 import os, subprocess
-from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, flash, render_template, request, redirect, url_for, send_file, Response
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -40,7 +40,7 @@ def home():
             flash("Image overlaying failed, probably because your image dimensions aren't at least 1000x1000", "Error")
             return render_template("home.html.jinja")
 
-        return send_from_directory(directory=app.config['OUT_FOLDER'], filename=secure)
+        return send_file(os.path.join(app.config['OUT_FOLDER'], secure), attachment_filename=secure, as_attachment=True)
     return render_template("home.html.jinja")
 
 if __name__ == "__main__":
