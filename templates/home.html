@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='foundation.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>AMHI Mental Health Advocacy Week - Overlay Generator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div align='center' class='header'>
+        <h1>Mental Health Advocacy Week</h1>
+        <h3>Overlay Generator</h3>
+        <span>Presented by AMHI, UC, etc</span>
+    </div>
+    <div align='center' class='row desc'>
+        Show your support for the mental health advocacy week with a new profile picture! Upload your own here or connect with Facebook to add the overlay to your current profile picture.
+    </div>
+    <div>
+        <form action='/' method='post'>
+            <input type='file' name='file'>
+            <input type='submit' value='Upload'>
+        </form>
+    </div>
+</body>
