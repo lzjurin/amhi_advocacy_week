@@ -22,22 +22,26 @@ def home():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            return render_template('failure.html')
+            flash("No image uploaded", "Error")
+            return render_template("home.html.jinja")
         f = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
         if f.filename == '' or not allowed_file(f.filename):
-            return render_template('failure.html')
+            flash("File type not allowed", "Error")
+            return render_template("home.html.jinja")
 
         secure = secure_filename(f.filename)
         path = os.path.join(app.config['UPLOAD_FOLDER'], secure)
         f.save(path)
         result = subprocess.call([app.config['SCRIPT'], path, app.config['FILTER'], os.path.join(app.config['OUT_FOLDER'], secure)])
+
         if result:
-            flash("Invalid image :(", "Error")
-            return render_template('home.html')
-        return render_template(send_from_directory(directory=app.config['OUT_FOLDER'], filename=secure)
-    return render_template('home.html')
+            flash("Image overlaying failed, probably because your image dimensions aren't at least 1000x1000", "Error")
+            return render_template("home.html.jinja")
+
+        return send_from_directory(directory=app.config['OUT_FOLDER'], filename=secure)
+    return render_template("home.html.jinja")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

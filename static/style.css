@@ -7,9 +7,13 @@ body > div > h1 {
 body > div > h2, h3, h4, h5, h6, span {
     color: skyblue;
 }
-body > div:nth-child(n+1) {
+body div:nth-child(n+1) {
     margin-top: 20px;
 }
 body > .desc {
+    width: 60%;
+}
+body > div#content {
+    margin: 5vh 20%;
     width: 60%;
 }
