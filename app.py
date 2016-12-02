@@ -1,7 +1,7 @@
 import os, subprocess
 from flask import Flask, flash, render_template, request, redirect, url_for, send_file, Response
 from werkzeug.utils import secure_filename
-from PIL import Image
+from PIL import Image, ExifTags
 
 app = Flask(__name__)
 app.debug=True
@@ -36,9 +36,25 @@ def home():
         path = os.path.join(app.config['UPLOAD_FOLDER'], secure)
         f.save(path)
         if request.user_agent.platform == 'iphone':# or request.user_agent.platform == 'android':
-            f = Image.open(path)
-            f = f.rotate(-90)
-            f.save(path)
+            try:
+                image = Image.open(path)
+                for orientation in ExifTags.TAGS.keys():
+                    if ExifTags.TAGS[orientation]=='Orientation':
+                        break
+                exif=dict(image._getexif().items())
+
+                if exif[orientation] == 3:
+                    image=image.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    image=image.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    image=image.rotate(90, expand=True)
+                image.save(path)
+                image.close()
+
+            except (AttributeError, KeyError, IndexError):
+                # cases: image don't have getexif
+                pass
         result = subprocess.call([app.config['SCRIPT'], path, app.config['FILTER'], os.path.join(app.config['OUT_FOLDER'], secure)])
 
         if result:
