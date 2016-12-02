@@ -1,6 +1,7 @@
 import os, subprocess
 from flask import Flask, flash, render_template, request, redirect, url_for, send_file, Response
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 app = Flask(__name__)
 app.debug=True
@@ -34,6 +35,10 @@ def home():
         secure = secure_filename(f.filename)
         path = os.path.join(app.config['UPLOAD_FOLDER'], secure)
         f.save(path)
+        if request.user_agent.platform == 'iphone':# or request.user_agent.platform == 'android':
+            f = Image.open(path)
+            f = f.rotate(-90)
+            f.save(path)
         result = subprocess.call([app.config['SCRIPT'], path, app.config['FILTER'], os.path.join(app.config['OUT_FOLDER'], secure)])
 
         if result:
