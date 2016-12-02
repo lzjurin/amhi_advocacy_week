@@ -4,3 +4,7 @@
 **/*.pyc
 out/*.png
 uploads/*.png
+out/*.jpg
+uploads/*.jpg
+out/*.JPG
+uploads/*.JPG
